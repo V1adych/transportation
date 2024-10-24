@@ -1,0 +1,277 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[T2A]{fontenc}  % For Cyrillic fonts
+\usepackage[utf8]{inputenc}  % For UTF-8 encoding
+\usepackage[russian]{babel}  % For Russian language support
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+    language=Python,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3
+}
+\title{Report of Programming Task 3 of the course "Introduction to Optimization" - Fall 2024}
+\author{Nikita Zagainov, Ilyas Galiev, Arthur Babkin, Nikita Menshikov, \\ Sergey Aitov}
+\date{September 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Team Leader Report}
+\noindent
+\begin{itemize}
+    \item Team leader: Nikita Zagainov --- 5
+
+          Managed team work, Implemented North-West corner method, Wrote report
+
+    \item Team member 1: Ilyas Galiev --- 5
+
+          Wrote QA tests for all algorithms, Contributed to the implementation of the
+          Russel's approximation algorithm
+
+    \item Team member 2: Arthur Babkin --- 5
+
+          Implemented Russel's approximation algorithm
+
+    \item Team member 3: Nikita Menshikov --- 5
+
+          Implemented Vogel's approximation algorithm
+
+    \item Team member 4: Sergey Aitov --- 5
+
+          Contributed to the implementation of the Russel's approximation algorithm,
+          Developed test cases for all algorithms
+\end{itemize}
+\section{Link to the product}
+\href{https://github.com/V1adych/transportation}{Project source code}
+
+\section{Programming language}
+Python
+
+\section{Testing Results}
+All the algorithm we implemented were tested on 4 inputs. The acceptance
+criteria for solvable in solvable problems was the following:
+\begin{align*}
+    \sum_{j=1}^{n} X_{ij} = S_i, \quad \forall i \\
+    \sum_{i=1}^{m} X_{ij} = D_j, \quad \forall j
+\end{align*}
+where $X_{ij}$ is the amount of goods transported from $i$-th source to $j$-th destination,
+$S_i$ is the supply of $i$-th source, and $D_j$ is the demand of $j$-th destination.
+
+The following test cases were used:
+
+\begin{itemize}
+    \item Test Case 1 (valid)
+          \begin{align*}
+              S & = \begin{bmatrix} 20 & 30 & 50 \end{bmatrix}      \\
+              D & = \begin{bmatrix} 30 & 10 & 30 & 30 \end{bmatrix} \\
+              C & = \begin{bmatrix}
+                        5 & 4 & 3 & 2 \\
+                        7 & 6 & 5 & 3 \\
+                        6 & 5 & 4 & 3
+                    \end{bmatrix}
+          \end{align*}
+
+    \item Test Case 2 (valid)
+          \begin{align*}
+              S & = \begin{bmatrix} 100 & 200 & 300 \end{bmatrix} \\
+              D & = \begin{bmatrix} 50 & 500 & 50 \end{bmatrix}   \\
+              C & = \begin{bmatrix}
+                        10 & 7 & 8 \\
+                        3  & 2 & 4 \\
+                        2  & 4 & 6
+                    \end{bmatrix}
+          \end{align*}
+
+    \item Test Case 3 (valid)
+          \begin{align*}
+              S & = \begin{bmatrix} 10 & 10 & 10 & 10 & 10 \end{bmatrix} \\
+              D & = \begin{bmatrix} 10 & 10 & 10 & 10 & 10 \end{bmatrix} \\
+              C & = \begin{bmatrix}
+                        2 & 3 & 1 & 4 & 5 \\
+                        4 & 1 & 2 & 3 & 2 \\
+                        3 & 2 & 5 & 1 & 2 \\
+                        1 & 4 & 3 & 2 & 1 \\
+                        2 & 3 & 2 & 1 & 4
+                    \end{bmatrix}
+          \end{align*}
+
+    \item Test Case 4 (valid)
+          \begin{align*}
+              S & = \begin{bmatrix} 50 & 70 & 120 & 80 & 60 \end{bmatrix} \\
+              D & = \begin{bmatrix} 100 & 120 & 70 & 90 \end{bmatrix}     \\
+              C & = \begin{bmatrix}
+                        2 & 3 & 1 & 4 \\
+                        4 & 1 & 2 & 3 \\
+                        3 & 2 & 5 & 1 \\
+                        1 & 4 & 3 & 2 \\
+                        2 & 3 & 2 & 1
+                    \end{bmatrix}
+          \end{align*}
+
+    \item Test Case 5 (invalid)
+          \begin{align*}
+              S & = \begin{bmatrix} 20 & 40 & 10 \end{bmatrix} \\
+              D & = \begin{bmatrix} 30 & 10 & 10 \end{bmatrix} \\
+              C & = \begin{bmatrix}
+                        2 & 3 & 1 \\
+                        4 & 1 & 2 \\
+                        3 & 2 & 5
+                    \end{bmatrix}
+          \end{align*}
+\end{itemize}
+
+\section{Code for Testing}
+
+\begin{lstlisting}[language=Python]
+import os
+import sys
+import numpy as np
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from north_west_corner import north_west_corner
+from russel import russel
+from vogel import vogel
+
+test_cases = [
+    dict(
+        S=np.array([20, 30, 50], dtype=np.float32),
+        D=np.array([30, 10, 30, 30], dtype=np.float32),
+        C=np.array(
+            [
+                [5, 4, 3, 2],
+                [7, 6, 5, 3],
+                [6, 5, 4, 3],
+            ],
+            dtype=np.float32,
+        ),
+        valid=True,
+    ),
+    dict(
+        S=np.array([100, 200, 300], dtype=np.float32),
+        D=np.array([50, 500, 50], dtype=np.float32),
+        C=np.array(
+            [
+                [10, 7, 8],
+                [3, 2, 4],
+                [2, 4, 6],
+            ],
+            dtype=np.float32,
+        ),
+        valid=True,
+    ),
+    dict(
+        S=np.array([10, 10, 10, 10, 10], dtype=np.float32),
+        D=np.array([10, 10, 10, 10, 10], dtype=np.float32),
+        C=np.array(
+            [
+                [2, 3, 1, 4, 5],
+                [4, 1, 2, 3, 2],
+                [3, 2, 5, 1, 2],
+                [1, 4, 3, 2, 1],
+                [2, 3, 2, 1, 4],
+            ],
+            dtype=np.float32,
+        ),
+        valid=True,
+    ),
+    dict(
+        S=np.array([50, 70, 120, 80, 60], dtype=np.float32),
+        D=np.array([100, 120, 70, 90], dtype=np.float32),
+        C=np.array(
+            [
+                [2, 3, 1, 4],
+                [4, 1, 2, 3],
+                [3, 2, 5, 1],
+                [1, 4, 3, 2],
+                [2, 3, 2, 1],
+            ],
+            dtype=np.float32,
+        ),
+        valid=True,
+    ),
+    dict(
+        S=np.array([20, 40, 10], dtype=np.float32),
+        D=np.array([30, 10, 10], dtype=np.float32),
+        C=np.array(
+            [
+                [2, 3, 1],
+                [4, 1, 2],
+                [3, 2, 5],
+            ],
+            dtype=np.float32,
+        ),
+        valid=False,
+    ),
+]
+
+
+def test_no_negative_supply():
+    for test_case in test_cases:
+        S = test_case["S"]
+        D = test_case["D"]
+        C = test_case["C"]
+        valid = test_case["valid"]
+        solved, X = north_west_corner(S, C, D)
+        assert valid == solved
+        if valid:
+            assert np.allclose(S, np.sum(X, axis=1))
+            assert np.allclose(D, np.sum(X, axis=0))
+
+
+def test_vogel():
+    for test_case in test_cases:
+        S = test_case["S"]
+        D = test_case["D"]
+        C = test_case["C"]
+        valid = test_case["valid"]
+        solved, X = vogel(S, C, D)
+        assert valid == solved
+        if valid:
+            assert np.allclose(S, np.sum(X, axis=1))
+            assert np.allclose(D, np.sum(X, axis=0))
+
+
+def test_russel():
+    for test_case in test_cases:
+        S = test_case["S"]
+        D = test_case["D"]
+        C = test_case["C"]
+        valid = test_case["valid"]
+        solved, X = russel(S, C, D)
+        assert valid == solved
+        if valid:
+            assert np.allclose(S, np.sum(X, axis=1))
+            assert np.allclose(D, np.sum(X, axis=0))
+\end{lstlisting}
+\end{document}
